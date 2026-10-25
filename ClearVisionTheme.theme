@@ -1,0 +1,57 @@
+; Copyright © Microsoft Corp.
+;Based on GreyEveTheme by http://eversins.deviantart.com/ (https://github.com/nitschis/GreyEveTheme)
+
+[Theme]
+; Windows - IDS_THEME_DISPLAYNAME_AERO
+DisplayName=ClearVisionTheme
+ThemeId={1D09C537-96FE-472C-9EC6-6B07A74E7C5A}
+
+[Control Panel\Desktop]
+PicturePosition=4
+
+[VisualStyles]
+Path=%SystemRoot%\Resources\Themes\Aero\AeroLite.msstyles
+ColorStyle=NormalColor
+Size=NormalSize
+AutoColorization=0
+ColorizationColor=0X7F000000
+VisualStyleVersion=10
+HighContrast=3
+SystemMode=Dark
+AppMode=Dark
+
+[MasterThemeSelector]
+MTSM=RJSPBS
+
+[Control Panel\Colors]
+ActiveBorder=18 18 18
+ActiveTitle=18 18 18
+AppWorkspace=18 18 18
+Background=0 0 0
+ButtonAlternateFace=140 140 140
+ButtonDkShadow=18 18 18
+ButtonFace=18 18 18
+ButtonHilight=18 18 18
+ButtonLight=18 18 18
+ButtonShadow=128 128 128
+ButtonText=60 130 210
+GradientActiveTitle=140 140 140
+GradientInactiveTitle=128 128 128
+GrayText=128 128 128
+Hilight=38 106 173
+HilightText=255 255 255
+HotTrackingColor=51 153 255
+InactiveBorder=18 18 18
+InactiveTitle=18 18 18
+InactiveTitleText=140 140 140
+InfoText=220 220 220
+InfoWindow=18 18 18
+Menu=18 18 18
+MenuBar=18 18 18
+MenuHilight=38 106 173
+MenuText=230 230 230
+Scrollbar=18 18 18
+TitleText=140 140 140
+Window=18 18 18
+WindowFrame=140 140 140
+WindowText=220 220 220

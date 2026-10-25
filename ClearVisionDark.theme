@@ -1,0 +1,27 @@
+; ClearVisionDark - regular (non high contrast) Windows 11 dark theme
+; Companion to ClearVisionTheme.theme, which is the high contrast variant.
+
+[Theme]
+DisplayName=ClearVisionDark
+ThemeId={6E5F3A42-9104-4789-B82C-AAB2D82CB80B}
+
+[Control Panel\Desktop]
+Wallpaper=
+TileWallpaper=0
+WallpaperStyle=10
+Pattern=
+
+[Control Panel\Colors]
+Background=0 0 0
+
+[VisualStyles]
+Path=%ResourceDir%\Themes\Aero\Aero.msstyles
+ColorStyle=NormalColor
+Size=NormalSize
+AutoColorization=0
+ColorizationColor=0XC4266AAD
+SystemMode=Dark
+AppMode=Dark
+
+[MasterThemeSelector]
+MTSM=RJSPBS

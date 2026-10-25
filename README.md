@@ -1,60 +1,57 @@
+# ClearVisionTheme
 
+Two dark Windows 11 themes plus a small tool that sets the window border colour. Grew out of
+[GreyEveTheme](https://github.com/nitschis/GreyEveTheme) by eversins, whose high contrast trick this keeps.
 
-# GreyEveTheme - Windows 10 / Windows 11 High Contrast Theme
-A Dark Grey Windows 10 / 11 Theme
+| File | What it is |
+|---|---|
+| `ClearVisionDark.theme` | Regular dark theme: Aero styles, dark mode flags, dark blue accent, black desktop. Normal Explorer selection (blue bar, white text). |
+| `ClearVisionTheme.theme` | High contrast variant: near-black (18 18 18) surfaces forced on every app, grey outlines, blue selection. |
+| `tools/BorderColor` | Sets the one-pixel border of every window (light grey active, darker inactive). Works with either theme. |
+| `*.deskthemepack` | The same themes packed as CAB archives; `build.ps1` regenerates them. |
 
+Double-click a `.theme` file to apply it. Switch back with any stock theme in Settings > Personalization.
 
-This theme can be used *without* system modifications. Just download and double click the theme file.
-_______________
+## Install (Windows)
 
-This is the best I can do with the default Microsoft theming engine, if you don't like something, it is likely because of those limitations (white borders).
-This is built upon their High Contrast theme, so be aware that some programs might look different. If you don't like it just select the Windows default theme and everything will be reverted.
+```powershell
+.\install.ps1                      # compile + start BorderColor at sign-in, apply ClearVisionDark
+.\install.ps1 -Theme HighContrast  # apply the high contrast variant instead
+.\install.ps1 -Theme None          # border tool only
+.\tools\BorderColor\uninstall.ps1  # stop the tool, remove it from startup, default borders back
+```
 
-![Image description](https://github.com/nitschis/GreyEveTheme/blob/master/screenshot.png)
+BorderColor is compiled on the spot with the C# compiler that ships with Windows
+(`%WINDIR%\Microsoft.NET\Framework64\v4.0.30319\csc.exe`), so there is no binary in the repo.
 
-**[Download](https://raw.githubusercontent.com/nitschis/GreyEveTheme/master/GreyEveTheme.theme)** (right click -> "Save Link As")
+## How a .theme works
 
+A `.theme` is a plain INI file. There is nothing to compile: `[VisualStyles]` picks the `.msstyles`
+and the dark mode flags, `[Control Panel\Colors]` sets the classic system colours. The high contrast
+variant points at the stock `AeroLite.msstyles` with `HighContrast=3`, which is what makes those
+colours apply everywhere.
 
+## High contrast colour keys, measured on Windows 11
 
+These took pixel probes to find; nothing documents them.
 
-_______________
+| Key | What it actually draws |
+|---|---|
+| `TitleText` | Outline of the active window (and its caption text) |
+| `InactiveTitleText` | Outline of inactive windows |
+| `ButtonText` | Most text in Explorer, control outlines, **and the fill of a focused selected row** |
+| `WindowText` | Secondary text (nav pane items), taskbar top line |
+| `Hilight` / `HilightText` | Unfocused selection bar / text on any selection |
+| `HotTrackingColor` | Hover outline and hyperlinks |
+| `SystemMode=Dark`, `AppMode=Dark` | Under `[VisualStyles]`; without them the theme does not register as dark mode |
 
+The `ButtonText` double duty is why a high contrast theme cannot have a dark selection bar with light
+text: the focused bar is always the same colour as the text. `ClearVisionDark` exists because of that.
 
-**Personal recommendations and fixes:**
+## Window borders
 
-  **Firefox**:   
-        
- - In firefox - Preferences -> Color and Appearance -> Colors -> In the drop down menu, select "Never".     
- - Install [Shadowfox](https://github.com/overdodactyl/ShadowFox)        
- - Install [Dark Background and Light Text](https://addons.mozilla.org/en-US/firefox/addon/dark-background-light-text/) (best performing dark extension from my testing)
-Set your settings like [this](https://i.imgur.com/l4vuqir.png)
- - If you would like to set better themes you most visited websites, you can do this with [Stylus](https://addons.mozilla.org/en-US/firefox/addon/styl-us/), get your themes at [UserStyles](https://userstyles.org/)
-
- **Chrome**:
-       
- - Install a dark theme
- - Install [Dark Background and LightText](https://chrome.google.com/webstore/detail/dark-background-and-light/cdcoopnlkdlmphjpjggdmhohkiklonkh?hl=en) (best performing dark extension from my testing)
-Set your settings like [this](https://i.imgur.com/l4vuqir.png)
- - If you would like to set better themes you most visited websites, you can do this with [Stylus](https://chrome.google.com/webstore/detail/stylus/clngdbkpkpeebahjckkjfobafhncgmne?hl=en), get your themes at [UserStyles](https://userstyles.org/)
-
- **Visual Studio fix**:
-        
- - Visual Studio will switch to the High Contrast theme and remove syntax highlighting. Fortunately this can be fixed, created a small guide [here](http://pastebin.com/pyUTD9CQ).
-
-
-If you find know of any other application fixes, please open an issue, I might add it.
-_______________
-
-
-Want to buy me a beer?
-
-BTC: bc1q7e332x640c7jqul3tv6p324pxvgsu4m2ksaedz
-
-ETH: 0xF28bd5071E100EC20D352C08A8ab928b42A6c04d
-
-[PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=TTM9AJC3PL3A6)
-
-
-_______________
-
-Have fun on the dark side!
+Neither theme type can set the border colour. The DWM border attribute can, from any process, even
+under high contrast, so `BorderColor.exe` applies it to every top-level window and re-applies on
+new and activated windows. The taskbar is a separate story: Windows 11 paints it at #202020 in its
+own layer, and only an Explorer-hooking tool such as TranslucentTB can take it darker
+(see `tools/TranslucentTB`).

@@ -1,0 +1,9 @@
+{
+  "desktop_appearance": {
+    "accent": "opaque",
+    "color": "#121212",
+    "show_peek": true,
+    "show_line": false,
+    "blur_radius": 9.0
+  }
+}
